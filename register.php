@@ -1,6 +1,6 @@
 <?php
 // تضمين الاتصال بقاعدة البيانات
-include("db.php");
+require "db.php";
 
 // التحقق من إذا كان الطلب هو POST
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
