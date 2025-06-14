@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $username = htmlspecialchars($_POST['username']);
     $password = htmlspecialchars($_POST['password']);
     $confirm = htmlspecialchars($_POST['confirm']);
-	 $date = date('d/m/Y H:i:s');
+	 $date = date('Y-m-d H:i:s');
     // التحقق من إذا تم رفع صورة
     if (!empty($_FILES['img']['name'])) {
         $file = $_FILES['img']['name'];
@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         // التحقق من امتداد الصورة
         if (in_array($ext, $allowed_exts)) {
             // إنشاء اسم عشوائي للصورة
-            $img = bin2hex(random_bytes(7)) . ".$ext";
+            $img = bin2hex(random_bytes(16)) . ".$ext";
             // نقل الصورة إلى المجلد المحدد
             if (!move_uploaded_file($tmp, "profile/$img")) {
                 die("❌ Error uploading image!");
@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     }
 
     // التحقق من تطابق كلمة المرور
-    if ($password === $confirm && !empty($username) && !empty($password)) {
+    if (!empty($password) && $password === $confirm && !empty($username)) {
         // تشفير كلمة المرور
         $hash = password_hash($password, PASSWORD_BCRYPT);
 
